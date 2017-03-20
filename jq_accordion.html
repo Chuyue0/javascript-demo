@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <style type="text/css">
+        *{margin: 0; padding: 0;}
+        ul,ol{ list-style: none;}
+        #box{ width: 1010px; height: 400px; margin: 100px auto;}
+        #box ul li{ width: 200px; height: 400px; border: 1px solid gold; float: left; background: url(img/1.jpg) no-repeat; margin-left: -1px; cursor:pointer;}
+    </style>
+    <script src="jquery-1.12.0.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="box">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    var speed=800;
+    $("#box ul li").each(function(index, el) {
+        var num=index+1;
+        $(el).css("backgroundImage","url(img/"+num+".jpg)");
+    });
+    $("#box li").hover(function() {
+        $(this).stop().animate({"width":"600px"}, speed).siblings().stop().animate({"width":"100"}, speed);
+    }, function() {
+        $("#box li").stop().animate({"width":"200px"}, speed);
+    });
+</script>
+</html>
