@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>鼠标悬停在矩形上可以看到坐标</title>
+    <script type="text/javascript">
+            function cnvs_getCoordinates(e){
+                x=e.clientX;
+                y=e.clientY;
+                document.getElementById("xycoordiv").innerHTML="coordiv:(" + x + ","+ y +")";
+            }
+            function clearsCoordiv(){
+                document.getElementById("xycoordiv").innerHTML="";
+            }
+    </script>
+</head>
+<body>
+    <p>鼠标悬停在矩形上可以看到坐标</p>
+    <div id="coordiv" style="width:100px;height:80px;border:1px solid #ccc; float:left;" onmousemove="cnvs_getCoordinates(event)" onmouseout="clearsCoordiv()"></div>
+    <div id="xycoordiv"></div>
+</body>
+</html>

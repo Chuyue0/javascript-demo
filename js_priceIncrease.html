@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>价格增减</title>
+    </head>
+    <script type="text/javascript" src="jquery-1.12.0.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var shu=$('.shu'),
+                jia=$('.jia'),
+                add=$('.add'),
+                min=$('.min'),
+                n=1;
+            
+                 $(add).click(function(event) {
+                     if(n<2 && $(this).hasClass('min')){
+                        n=1;
+                     }else if($(this).hasClass('add')){
+                        n++;
+                     }else if($(this).hasClass('min')){
+                        n--;
+                     }
+                     shu.text(n)
+                     jia.text(n*100)
+                 });
+                 $(min).click(function(event) {
+                      n--;
+                      shu.text(n);
+                      if(n<2){
+                        n=1
+                        $(shu).text('1')
+                      }
+                    
+                      jia.text(n*100)
+                 });
+      
+
+            
+        });
+    </script>
+    <body>
+      <!-- 数量加减 -->
+        <div class="consoleButton">
+            <button class="add">+</button>
+            <button class="min">-</button>
+        </div>
+
+        <!-- 价格加减 -->
+        <span class="shu">1</span>
+        <span class="jia">100</span>
+    
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>加载进度条</title>
+	<style type="text/css">
+		.container{width: 450px;height: 20px; border: 1px solid #c8c8c8; border-radius: 10px; overflow: hidden}
+		#loaded{height: 100%; background-color: orange; line-height: 150%;}
+		
+		#prog{height: 100%;background-color: orangered;line-height: 150%; text-align: center;}
+		
+	</style>
+	<script src="jquery-1.12.0.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+	<div id="prog" style="width:0%;"></div>
+</div>
+<script type="text/javascript">
+	function setProg(){
+		var prog=document.getElementById("prog");
+		prog.style.width=parseInt(prog.style.width)+1+"%";
+		prog.innerHTML=prog.style.width;
+		if(prog.style.width=="100%"){
+			window.clearInterval(timer);
+			return;
+		}
+	}
+	var timer=window.setInterval(function(){setProg();},50);
+	window.onload=function(){
+		timer;
+	}
+</script>
+
+</body>
+</html>
