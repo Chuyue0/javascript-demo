@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>html dom remove()方法</title>
+</head>
+<body>
+	<form action="">
+		<select name="" id="fruit">
+			<option>apple</option>
+			<option>bababa</option>
+			<option>lalala</option>
+		</select>
+		<input type="button" onclick="removeOp()" value="remove options" />
+		<p></p>
+	</form>
+</body>
+<script type="text/javascript">
+	function removeOp(){
+		var fruits=document.getElementById("fruit");
+		fruits.remove(fruits.selectedIndex);
+	}
+</script>
+</html>

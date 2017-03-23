@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JS插件morris.js学习</title>
+    <link rel="stylesheet" type="text/css" href="css/morris.css" />
+    <script src="jquery-1.12.0.min.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js" type="text/javascript"></script>   <!-- JS矢量图库 -->
+    <script src="js/morris.js" type="text/javascript"></script>
+    <style type="text/css">
+        .size {
+          width: 800px;
+          height: 300px;
+          margin: 20px auto ;
+        }
+        h1{ text-align: center;}
+    </style>
+    
+</head>
+<body>
+    <h1>Line Chart</h1>
+    <div id="lineChart" class="size"></div>
+    <h1>LineDay Chart</h1>
+    <div id="lineDayChart" class="size"></div>
+    <h1>Area Chart</h1>
+    <div id="areaChart" class="size"></div>
+    <h1>Bar Chart</h1>
+    <div id="barChart" class="size"></div>
+    <h1>Donut Chart</h1>
+    <div id="donutChart" class="size"></div>
+    <script type="text/javascript">
+        (function(){
+            Morris.Line({
+                element: 'lineChart',//id
+                data: [               
+                    { year: '2010',value: '30'},
+                    { year: '2011',value: '10'},
+                    { year: '2012',value: '20'},
+                    { year: '2013',value: '5'},
+                    { year: '2014',value: '30'}
+                ],
+                xkey: 'year',       //x-value
+                ykeys: ['value'],    //y-value,a list of names
+                labels: ['Value'],   //hover display ,ykeys
+                //choice
+                lineWidth: 4,       
+                lineColors: ['#16a085'],  //the colors of line and points
+                smooth: true,       //line's radian,straight or bend
+                hideHover: 'auto',     //hoverOut hide
+            });
+        })();
+        (function(){
+            var lineDay_data=[
+                    {'period':'2016-04-01','licensed':3407,'sorned':660},
+                    {'period':'2016-03-25','licensed':3351,'sorned':620},
+                    {'period':'2016-03-27','licensed':3300,'sorned':610},
+                    {'period':'2016-03-16','licensed':3257,'sorned':664},
+                    {'period':'2016-03-15','licensed':3257,'sorned':664},
+                    {'period':'2016-03-12','licensed':3248,'sorned':627},
+                    {'period':'2016-03-10','licensed':3215,'sorned':684}
+                ];
+            Morris.Line({
+                element: 'lineDayChart',
+                data: lineDay_data,
+                xkey: 'period',
+                ykeys: ['licensed','sorned'],
+                labels: ['Licensed','Sorn']
+            });
+        })();
+        (function(){
+            Morris.Area({
+            element: 'areaChart',
+            data: [
+                {x: '2010 Q1',y: 3,z: 4},
+                {x: '2011 Q2',y: 1,z: 6},
+                {x: '2012 Q3',y: null,z: 2},
+                {x: '2013 Q4',y: 7,z: 3},
+                {x: '2014 Q5',y: 3,z: 4},
+                {x: '2015 Q4',y: 4,z: 1}
+            ],
+            xkey: 'x',
+            ykeys: ['y','z'],
+            labels: ["Y","Z"],
+            //choice
+            //behaveLikeLine: true
+            }).on('click', function(i,row) {
+                console.log(i,row);
+            });
+        })();
+        (function(){
+            Morris.Bar({
+                element: 'barChart',
+                data: [
+                    {x: '2012',y: .5,z:2,a:3},
+                    {x: '2012 Q2',y: 1,z:null,a:5},
+                    {x: '2012 Q3',y: 2,z:2,a:4},
+                    {x: '2012 Q4',y: 3,z:4,a:3},
+                    {x: '2013 Q1',y: 5,z:3,a:4},
+                    {x: '2013 Q2',y: 6,z:3,a:2},
+                    {x: '2013 Q3',y: 7,z:2,a:4},
+                    {x: '2013 Q4',y: 8,z:3,a:4}
+                ],
+                xkey: 'x',
+                ykeys: ['y','z','a'],
+                labels: ['Y','Z','A'],
+                //choice
+                barColors: function(row,seris,type){
+                    if( type=='bar'){
+                        var red=Math.ceil(255*row.y/this.ymax);//red color
+                        return 'rgb('+red+',0,0)';
+                    }else{
+                        return '#000';
+                    }
+                },
+                //axes:false      //false is closed axes of x and y
+            });
+        })();
+        (function(){
+            var donut_data=[
+                { value:70,label:'sugar'},
+                { value:15,label:'drink'},
+                { value:5,label:'purple'},
+                { value:10,label:'apple'}
+            ];
+            Morris.Donut({
+                element: 'donutChart',
+                data: donut_data,
+                formatter: function(x){ return x+"%"}   //x is value
+            }).on('click',function(i,row){
+                console.log(i,row);
+            });
+        })();
+    </script>
+</body>
+</html>
