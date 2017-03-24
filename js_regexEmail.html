@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>正则验证邮箱地址</title>
+</head>
+<body>
+    <input type="text" placeholder="输入邮箱地址" id="txt" />
+    <input type="button" value="验证" id="btn" />
+    <script type="text/javascript">
+        var txt=document.getElementById("txt");
+        var btn=document.getElementById("btn");
+        btn.onclick=function(){
+            var email=txt.value.replace(/^\s+|\s+$/g,"").toLowerCase();
+            var reg=/^[a-z0-9](\w|\.|-)*@([a-z0-9]+-?[a-z0-9]+\.){1,3}[a-z]{2,4}$/i;
+            if (email.match(reg)==null) {
+                alert("请输入有效的邮箱地址！");
+            }else{
+                alert("OK");
+            }
+        }
+    </script>
+</body>
+</html>

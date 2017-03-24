@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>点击按钮返回到顶部</title>
+    <style type="text/css">
+        *html{ background-image: url(about:blank); background-attachment: fixed;}
+        .backToTop{ width: 18px; line-height: 1.2; padding: 5px 0; background-color: gray; color:#fff; font-size: 14px; text-align: center; position: fixed; right: 10px; bottom: 100px; cursor:pointer; display: none; _position:absolute;_bottom:auto;}
+        .box{ width: 100px; height: 1500px; background-color: pink;}
+    </style>
+    <script src="jquery-1.12.0.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+    <script type="text/javascript">
+        $(function() {
+            var $backToTopTxt="返回顶部",
+                $backToTopEle=$('<div class="backToTop"></div>').appendTo($("body")).text($backToTopTxt).attr("title", $backToTopTxt).click(function(event) {
+                        $("html,body").animate({"scrollTop":0}, 200);
+                }),$backToTopFun = function(){
+                    var st=$(document).scrollTop(),
+                        winh=$(window).height();
+                    (st > 0)? $backToTopEle.show():$backToTopEle.hide();
+                    if(!window.XMLHttpRequest){
+                        $backToTopEle.css('top', st+winh-166);
+                    }
+                };
+            $(window).bind("scroll",$backToTopFun);
+            $(function(){
+                $backToTopFun();
+            });
+        });
+        /*$(function() {
+            var $backToTopTxt = "返回顶部", 
+                $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body")).text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+            $("html, body").animate({ scrollTop: 0 }, 120);
+    }), $backToTopFun = function() {
+        var st = $(document).scrollTop(), winh = $(window).height();
+        (st > 0)? $backToTopEle.show(): $backToTopEle.hide();    
+        //IE6下的定位JS解决方案
+        if (!window.XMLHttpRequest) {
+            $backToTopEle.css("top", st + winh - 166);    
+        }
+    };
+    $(window).bind("scroll", $backToTopFun);
+    $(function() { $backToTopFun(); });
+});*/
+    </script>
+</html>

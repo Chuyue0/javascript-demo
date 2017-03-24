@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>模拟发送短信倒计时</title>
+	<script src="jquery-1.12.0.min.js"></script>
+</head>
+<body>
+	<input type="button" id="btn" value="免费获取验证码" onclick="obtain(this)">
+	<script type="text/javascript">
+		var count=60;
+		function obtain(obj){
+			if(count == 0){
+				obj.removeAttribute("disabled");
+				obj.value="免费获取验证码";
+				count=60;
+				return;
+			}else{
+				obj.setAttribute("disabled",true);
+				obj.value="重新发送("+ count +")";
+				count--;
+			}
+			setTimeout(function(){obtain(obj)},1000);
+		}
+	</script>
+</body>
+</html
