@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>js排序算法熟悉</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*插入排序*/
+		function insertSort(arr){
+			var arrLen=arr.length;
+			for(var i=0;i<arrLen;i++){
+				var index=0;
+				for(var j=1;j<arrLen-i;j++){
+					if(arr[j]>arr[index]) index=j;
+				}
+				var temp=arr[arrLen-i-1];
+				arr[arrLen-i-1]=arr[index];
+				arr[index]=temp;
+			}
+			return arr;
+		}
+		/*冒泡排序*/
+		function bubbleSort(arr){
+			for(var i=0;i<arr.length;i++){
+				for(var j=0;i<arr.length-i-1;i++){
+					if(arr[j]>arr[j+1]){
+						var temp=arr[j+1];
+						arr[j+1]=arr[j];
+						arr[j]=temp;
+					}
+				}
+			}
+			return arr;
+		}
+		/*快速排序（常用）*/
+		function quickSort(arr){
+			if (arr.length <= 1) { return arr; }
+			var index=Math.floor(arr.length/2);
+			var center=arr.splice(index,1)[0];
+			var left=[],right=[];
+			for(var i=0;i<arr.length;i++){
+				arr[i]<center ? left.push(arr[i]) : right.push(arr[i]);
+			}
+			return quickSort(left).concat([center],quickSort(right));
+		}
+		/*javascrip封装好的排序处理方法*/
+		function encapSortFunc(arr){
+			var posiSeq,reverseSeq;
+			//正序
+			posiSeq=arr.sort(function(a,b){
+				return a-b;
+			});
+			//反序
+			reverseSeq=arr.sort(function(a,b){
+				return b-a;
+			});
+			return posiSeq,reverseSeq;
+		}
+		var array=[1,31,2,5,10];//数组长度排除为1
+		console.log(insertSort(array));
+		console.log(bubbleSort(array));
+		console.log(encapSortFunc(array));
+		var arr1=quickSort(array);
+		console.log(arr1);
+	</script>
+</body>
+</html>

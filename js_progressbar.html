@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html > 
+<head> 
+<title>js进度条</title> 
+<style type="text/css"> 
+  body{ 
+    text-align:center; 
+  } 
+  .graph{ 
+    width:400px; 
+    border:1px solid #F8B3D0; 
+    height:25px; 
+  } 
+  #bar{ 
+        display:block; 
+        background:#FFE7F4; 
+        /*float:left;*/ 
+        height:100%; 
+        text-align:right; 
+    } 
+    /*#barNum{ 
+        position:absolute; 
+    }*/ 
+</style> 
+</head> 
+<body> 
+    <div class="graph"> 
+        <span id="bar" style="width:1%;"></span> 
+    </div> 
+    <script type="text/javascript"> 
+        function $(obj){ //封装方法，相当于jQuery
+            return document.getElementById(obj); 
+        } 
+        function go(){ 
+            $("bar").style.width = parseInt($("bar").style.width) + 1 + "%"; 
+            $("bar").innerHTML = $("bar").style.width; 
+            if($("bar").style.width == "100%"){ 
+                window.clearInterval(bar); //进度为100时清除定时器
+            } 
+        } 
+        var bar = window.setInterval("go()",100); //设置定时器
+        window.onload = function(){ 
+            bar; 
+        } 
+</script>
+</body> 
+</html>
