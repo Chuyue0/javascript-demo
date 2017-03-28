@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>jquery仿照网易某个网站的部分效果</title>
+    <style type="text/css">
+        *{ margin: 0; padding: 0;}
+        a,a:hover{text-decoration: none; color:#c6c6c6;}
+        em{ font-style: normal;}
+        .carouse-con{ width: 320px; height: 320px; margin:100px auto; overflow: hidden; position: relative;}
+        .car-bg-img{ width: 100%; height: 100%; position: absolute; left: 0; top:0;}
+        .jk-btn{ width: 100%; height: 100%; position: absolute; left: 0; top:0; background:rgba(0,0,0,0.5);}
+        .txt1{ display: block; padding: 60px 0 30px; font-size: 20px; text-align: center; font-weight: 700; line-height: 30px; color:#fff; position: relative; left:0; top:0;}
+        .txt2{ display: block; width: 160px; line-height: 28px; margin: 0 auto; font-size: 14px; text-align: center; position: relative; left:0; bottom:0;}
+        .carouse-con p{ width: 100%; height: 60px; position: absolute; bottom: 0; left: 0; text-align: center;}
+        .ilike{ width: 30px; height: 30px; background: url(images/wangyi_carouse_like.png) no-repeat left center; line-height: 30px; padding-left: 30px;  transform:scale(1); transition: all .4s linear 0s;}
+        .ilike:hover{ transform:scale(1.2);}
+        .bg-font-btm{ width: 100%; height: 120px; background: #cf1132; position: absolute; left: 0; bottom:-120px;}
+        .bg-font-top{ width: 100%; height: 60px; background: url(images/wangyi_carouse_font.png) no-repeat; position: absolute; left:0; top: -60px;}
+    </style>
+    <script src="jquery-1.12.0.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="carouse-con">
+        <div class="car-bg-img" style="background:url(images/picAnim.jpg) no-repeat;"></div>
+        <a href="#" class="jk-btn">
+            <em class="bg-font-btm"></em>
+            <em class="bg-font-top"></em>
+            <span class="txt1">影之刃年度资料片公测</span>
+            <span class="txt2">年度资料片“沐血新生”，新角暴走萝莉送全民福利！</span>
+        </a> 
+        <p>
+            <span class="like">
+                <a href="#" class="ilike">
+                    <em class="ilike-num">0</em>人赞过
+                </a>
+            </span>
+        </p>
+    </div>
+</body>
+<script type="text/javascript">
+    var speed=800;
+    $(".carouse-con").hover(function() {
+        $(".jk-btn").css('background', 'rgba(0,0,0,0)');
+        $(".bg-font-top").stop().animate({"top":0}, speed);
+        $(".bg-font-btm").stop().animate({"bottom":0}, speed);
+        $(".car-bg-img").stop().animate({"left":"-5px"}, speed);
+        $(".txt1").stop().animate({"top":"-40px"}, speed);
+        $(".txt2").stop().animate({"bottom":"-100px"}, speed);
+    }, function() {
+        $(".jk-btn").css('background', 'rgba(0,0,0,.5)');
+        $(".bg-font-top").stop().animate({"top":"-60px"}, speed);
+        $(".bg-font-btm").stop().animate({"bottom":"-120px"}, speed);
+        $(".car-bg-img").stop().animate({"left":"0"}, speed);
+        $(".txt1").stop().animate({"top":0}, speed);
+        $(".txt2").stop().animate({"bottom":0}, speed);
+    });
+</script>
+</html>
