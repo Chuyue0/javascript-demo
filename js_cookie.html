@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>js cookie使用--广告推广例子(有待优化，不完整)</title>
+	<style type="text/css">
+		#content{width: 320px; height: 1000px; margin: 0 auto; position: relative; overflow: hidden;background-color: #eee; }
+		#adv{ position: fixed; bottom: 0; left: 50%; margin-left: -160px;width: 320px; height: 60px; display: none;}
+		#adv .close{position: absolute; right: 2px;top: 2px;font-size: 18px; color: orangered; cursor: pointer;}
+		#adv p{display: none;}
+	</style>
+	<script src="jquery-1.12.0.min.js"></script>
+	<script src="jquery.cookie.js"></script>
+</head>
+<body>
+	<div id="content">
+		<div id="adv">
+			<img src="images/advimg2.png" />
+			<span class="close">X</span>
+			<p></p>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var cookie={
+		    set:function(key,value,hours){
+		        var date=new Date();
+		        date.setTime(date.getTime()+hours*3600*1000);
+		        document.cookie=key+"="+value+";expires="+date.toGMTString()+";path=/";
+		    },
+		    get:function(key){
+		        var getCookie=document.cookie.replace(/[ ]/g,"");
+		        var arrCook=getCookie.split(";");
+		        var tips;//存储获取
+		        for(var i=0;i<arrCook.length;i++){
+		            var arr=arrCook[i].split("=");
+		            if(key == arr[0]){
+		                tips=arr[1];
+		                break;
+		            }
+		        }
+		        return tips;
+		    },
+		    del:function(key){
+		    	var exp=new Date();
+				exp.setTime(exp.getTime()-1);
+				var val=this.get(key);
+				if(val!=null){
+					document.cookie=key+"="+val+';expires='+exp.toGMTString();
+				}
+		    }
+		}
+		//main func
+		function advSpread(img,hour,num){
+			//console.log(img,hour,num);//yeah!
+			var intervals;
+			var imgCookie=cookie.get('image'),imgStatus=cookie.get('status');
+			if(imgCookie){
+				console.log('1:img有缓存');
+				$("#adv").hide(0);
+			}else{
+				if(imgStatus){
+					console.log('2:缓存过期啦');
+					cookie.del("image");
+					cookie.del("status");
+					var img='images/advimg.png',hour=0.1,num=5;
+					advSpread(img,hour,num);
+				}else{
+				console.log('3:没有缓存');
+				cookie.set('image',img,hour);
+				cookie.set('status',status,hour);
+				$("#adv").show(0);
+				clearInterval(intervals);
+                intervals=setInterval(function(){
+                    if(num<=1){
+                        hiddenAdv();
+                        clearInterval(intervals);
+                    }
+                    $("#adv p").html(num);
+                    num--;
+                }, 1000)
+                }
+			}
+		}
+		function hiddenAdv(){
+	        $("#adv").stop().fadeOut('slow');
+	    }
+		var path='http://127.0.0.1:8020/demo/';
+		var advimg=path+$('#adv').find('img').attr('src'); //广告图路径
+		var hourNum=0.1,shouNum=10; //hourNum为多少(小时)内在同一个浏览器中展示一次；shouNum为显示多少(秒)，也就是几秒后关闭广告图
+		advSpread(advimg,hourNum,shouNum);
+		$('.close').on('click',hiddenAdv);
+	});
+	
+
+	</script>
+</body>
+</html>
