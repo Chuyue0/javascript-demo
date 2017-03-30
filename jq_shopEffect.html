@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>jquery模拟商城商品效果图</title>
+    <style type="text/css">
+        *{margin: 0; padding: 0; }
+        img{display: block;}
+        #box{width: 790px; height: 361px; margin: 100px auto;}
+        .double,.single{float: left; width: 158px; overflow: hidden;}
+    </style>
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(function() {
+        var speed=500;
+        $("#box").find(".pic").hover(function() {
+            $(".pic").stop().fadeTo(speed,0.6);
+            $(this).stop().fadeTo(speed,1);
+            $(this).children('img').stop().animate({"marginLeft":"-15px"}, speed)
+        }, function() {
+            $(".pic").stop().fadeTo(speed,1);
+            $(this).children('img').stop().animate({"marginLeft":"0"}, speed)
+        });
+    });
+</script>
+</head>
+<body>
+    <div id="box">
+        <div class="double">
+            <a href="#" class="pic"><img src="img/01.jpg" alt="" /></a>
+            <a href="#" class="pic"><img src="img/02.jpg" alt="" /></a>
+        </div>
+        <div class="single">
+            <a href="#" class="pic"><img src="img/03.jpg" alt="" /></a>
+        </div>
+        <div class="double">
+            <a href="#" class="pic"><img src="img/04.jpg" alt="" /></a>
+            <a href="#" class="pic"><img src="img/05.jpg" alt="" /></a>
+        </div>
+        <div class="single">
+            <a href="#" class="pic"><img src="img/06.jpg" alt="" /></a>
+        </div>
+        <div class="double">
+            <a href="#" class="pic"><img src="img/07.jpg" alt="" /></a>
+            <a href="#" class="pic"><img src="img/08.jpg" alt="" /></a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>jquery模拟查看大图效果</title>
+    <style type="text/css">
+        *{ margin: 0; padding: 0;}
+        .product{ width: 350px; height: 350px; border: 1px solid #000; margin: 100px; position: relative;}
+        .follow{ width: 150px; height: 150px; background: yellow; opacity:0.5; position: absolute; left: 0; top: 0; display: none; cursor: move;}
+        .bigPic{ width: 350px; height: 350px; float: left; background: url(images/datu.jpg) no-repeat; position: absolute; left: 500px ; top:100px; display: none;}
+    </style>
+    <script src="jquery-1.12.0.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="product">
+        <img src="images/xiaotu.jpg" alt="" />
+        <div class="follow"></div>
+    </div>
+    <div class="bigPic"></div>
+</body>    
+    <script type="text/javascript">
+        var x=0,
+            y=0;
+        $(".product").hover(function() {
+            $(this).children('.follow').toggle();
+            $(this).siblings('.bigPic').toggle();
+        });
+        $(".product").mousemove(function(event) {
+            x=event.pageX-$(this).offset().left-$(".follow").width()/2;
+            y=event.pageY-$(this).offset().top-$(".follow").height()/2;
+            if(x<0){
+                x=0;
+            }else if(x>200){
+                x=200;
+            }
+            if(y<0){
+                y=0;
+            }else if(y>200){
+                y=200;
+            }
+        $(this).children('.follow').css({"left": x,"top": y});
+        var bigPicX=-x*(800/350),
+            bigPicY=-y*(800/350);
+        $(this).siblings('.bigPic').css("background-position", ""+bigPicX+"px"+bigPicY+"px");
+        });
+    </script>
+</html>
