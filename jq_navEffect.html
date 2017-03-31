@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>jquery模仿网站标签页导航滑动效果</title>
+    <style type="text/css">
+        *{ margin: 0; padding: 0;}
+        ul{ list-style: none;}
+        img{ display: block;}
+        .clear{ clear: both;}
+        .box{ width: 752px; border: 1px solid #ccc; padding: 10px 0 0 10px; margin: 100px auto; }
+        .box ul li{ float: left; width: 178px; height: 125px; margin: 0 10px 10px 0; cursor: pointer; position: relative; overflow: hidden;}
+        .box ul li div{ width: 178px; height: 25px; background: rgba(0,0,0,0.5); position: absolute; left: 0; bottom: -25px;}
+        .box ul li p{ width: 178px; line-height: 25px; color:#fff; font-size: 12px; text-align: center; background: url(images/navbg.png) no-repeat 8px 0;  position: absolute; left: 0; bottom: -25px; z-index: 2;}
+    </style>
+    <script src="jquery-1.12.0.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="box clear">
+        <ul>
+            
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <script type="text/javascript">
+        var speed=500,
+            node1=$("<p>百度一下，你就知道</p>")
+            node2=$("<div></div>");
+        var imgStr='';
+        for(var i=1;i<=8;i++){
+        	imgStr+='<li><img src="images/nav0'+i+'.JPG" alt="" /></li>';
+        }
+        $('.box').find('ul').append(imgStr);
+        $(".box img").after(node1);
+        $(".box p").after(node2);
+        $(".box p").each(function(index) {
+            var num=-index*25;
+            $(this).css("background-position", "8px "+num+"px");
+        });
+        $(".box li").hover(function() {
+            $(this).children('p,div').stop().animate({"bottom":0}, speed);
+        },function(){
+            $(this).children('p,div').stop().animate({"bottom":"-25px"}, speed);
+        });
+    </script>
+</body>
+</html>
