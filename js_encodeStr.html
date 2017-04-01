@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>JS编码解码了解</title>
+</head>
+<body>
+	
+<script type="text/javascript">
+	var str='我是谁？Who are you?',str2='https://www.gude.com?%id=1#type=1';
+	
+	str=encodeURI(str);console.log("中文编码："+str);//"中文编码：%E6%88%91%E6%98%AF%E8%B0%81%EF%BC%9FWho%20are%20you?"
+	str=decodeURI(str);console.log("中文解码："+str);//"中文解码：我是谁？Who are you?"
+	
+	str2=encodeURI(str2);console.log("网址编码："+str2);//"网址编码：https://www.gude.com?%25id=1#type=1"	
+	str2=decodeURI(str2);console.log("网址编码："+str2);//"网址编码：https://www.gude.com?%id=1#type=1"
+	
+	//对比str2
+	var comStr='https://www.gude.com?%id=1#type=1';
+	comStr=encodeURIComponent(comStr);console.log("组成部分编码："+comStr);//"组成部分编码：https%3A%2F%2Fwww.gude.com%3F%25id%3D1%23type%3D1"
+	comStr=decodeURIComponent(comStr);console.log("组成部分解码："+comStr);//"组成部分解码：https://www.gude.com?%id=1#type=1"
+	
+	//对比
+	comStr=escape(comStr);console.log("字符串编码："+comStr);//"字符串编码：https%3A//www.gude.com%3F%25id%3D1%23type%3D1"
+	comStr=unescape(comStr);console.log("字符串解码："+comStr);//"字符串解码：https://www.gude.com?%id=1#type=1"
+</script>
+</body>
+</html>

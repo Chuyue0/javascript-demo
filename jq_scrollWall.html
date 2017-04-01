@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>jquery照片墙效果</title>
+    <style type="text/css">
+        *{margin: 0; padding: 0;}
+        /*img{display: block;}*/
+        #box{width: 500px; height: 90px; border: 1px solid red; font-size: 0; overflow:hidden; margin: 100px auto;}
+        #boxin{width:500%;}
+        #left,#right{float: left;}
+    </style>
+    <script src="jquery-1.12.0.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="box">
+        <div id="boxin">
+            <div id="left">
+                
+            </div>
+            <div id="right"></div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var speed=40;
+        $box=$("#box"),
+        $left=$("#left"),
+        $right=$("#right");
+    var imgstr='';
+    for(var i=1;i<=6;i++){
+    	imgstr+='<img src="img/wall_s'+i+'.jpg" alt="" />'
+    }
+    $left.append(imgstr);
+    right.innerHTML=left.innerHTML;
+    var timer=setInterval(fun, speed);
+    function fun(){
+        if(left.offsetWidth-box.scrollLeft<=0){
+            box.scrollLeft=0;
+        }else{
+            box.scrollLeft++;
+        }
+    }
+    $box.on({
+        mousemove:function(){
+            clearInterval(timer);
+        },
+        mouseout:function(){
+            timer=setInterval(fun, speed);
+        }
+    });
+</script>
+</html>
