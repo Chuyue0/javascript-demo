@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+  <title>javascript模拟添加和删除表格行</title>
+  <style type="text/css">
+  	#table{width: 500px;}
+  	#table td{height: 30px;}
+  	#table,#table td{border: 1px solid #333; border-collapse: collapse;}
+  </style>
+</head> 
+<body> 
+  <table border="1" width="500" id="table" align="center">
+    <tr>
+	    <th>学号</th>
+	    <th>姓名</th>
+	    <th>操作</th>
+    </tr> 
+    <tr>
+    	<td>xh001</td>
+    	<td>王小明</td>
+    	<td><a href="javascript:;" onclick="del(this)">删除</a></td>   
+    </tr>
+    <tr>
+    	<td>xh002</td>
+    	<td>刘小芳</td>
+    	<td><a href="javascript:;" onclick="del(this)">删除</a></td>   
+    </tr> 
+  </table>
+  <br />
+  <input type="button" value="添加一行" onclick="addTr()"  />   
+  <script type="text/javascript"> 
+    window.onload = function(){
+    	// 鼠标移动改变背景,可以通过给每行绑定鼠标移上事件和鼠标移除事件来改变所在行背景色。
+    	var tr=document.getElementsByTagName("tr");
+    	for(var i=0;i<tr.length;i++){
+        addBg(tr[i]);
+    	}
+    }  
+    function addBg(obj){
+        obj.onmouseover=function(){
+            obj.style.backgroundColor="#f2f2f2";
+        }
+        obj.onmouseout=function(){
+            obj.style.backgroundColor="#fff";
+        }
+    }
+    function createElem(elem){
+    		return document.createElement(elem);
+    }
+      // 编写一个函数，供添加按钮调用，动态在表格的最后一行添加子节点；
+    var num=document.getElementsByTagName("tr").length;
+    function addTr(){
+      	var table=document.getElementById("table");
+       	var tr=createElem("tr"),td1=createElem("td"),td2=createElem("td"),td3=createElem("td");
+        td1.innerHTML="xh00"+num;
+        td2.innerHTML=num+"号学生,无姓名";
+        td3.innerHTML="<a href='javascript:;' onclick='del(this)'>删除</a>";
+        table.appendChild(tr);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        var tr=document.getElementsByTagName("tr");
+        for(var i=0;i<tr;i++){
+          addBg(tr[i]);
+        }
+        num++;
+    } 
+    // 创建删除函数
+    function del(obj){
+        var tr=obj.parentNode.parentNode;
+        tr.parentNode.removeChild(tr);
+    }
+  </script> 
+ </body>
+</html>

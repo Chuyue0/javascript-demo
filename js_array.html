@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>js数组操作</title>
+</head>
+<body>
+  <h3>污染城市列表</3>
+  <p>筛选出污染指数高出60的城市</p>
+  <ul id="cityList">
+    
+  </ul>
+  <script type="text/javascript">
+    var listData=[ ["北京",90],["上海",50],["福州",10],["广州",50],["成都",90],["西安",100] ];
+    (function(){
+      // var $=function(id){
+      //   return document.getElementById(id);
+      // }
+      //选出>60的城市
+      var sortCount=listData.filter(function(data) {
+        return data[1]>60;
+      });
+      sortCount.sort(function(a,b){
+        return b[1]-a[1];
+      });
+      var cityList=document.getElementById("cityList");
+      for(var i=0;i<sortCount.length;i++){
+        cityList.innerHTML+='<li>第'+(i+1)+'名:'+sortCount[i][0]+'（样例），'+sortCount[i][1]+'</li>';
+      }
+    })();
+  </script>
+</body>
+</html>

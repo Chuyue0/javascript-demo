@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>dom 用户表单输入操作</title>
+</head>
+<body>
+  <label for="in">请输入今天空气质量：<input type="text" id="in" /></label>
+  <button id="btn">确认</button>
+  <div>您输入的值是: <span id="infor">尚无录入</span></div>
+  <script type="text/javascript">
+      (function(){
+          var inv=document.getElementById("in");
+          var btn=document.getElementById("btn");
+          var infor=document.getElementById("infor");
+          btn.onclick=function(){
+            var val;
+            if(inv.value!=""){
+              val=inv.value;
+            }else{
+              val="尚无录入";
+            }
+            infor.innerText=val;
+            return false;
+          }
+        
+      })();
+  </script>
+</body>
+</html> 
