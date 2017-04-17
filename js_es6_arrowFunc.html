@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript ES6箭头函数示例</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//基本写法
+		var o1={
+		    x:1,
+		    func:function(){console.log(this.x);},
+		    texts:function(){
+		        
+		        setTimeout(function(){
+		        // this.func(); this发生了改变,this指向执行时候的
+		        _this.func();
+		    }, 100)}
+		};
+		o1.texts();//TypeError this.func() is not a function(),需要加上this定义，输出1
+		//箭头函数示例
+		var o2={
+		    x:2,
+		    func :function(){console.log(this.x)},
+		    texts:function(){setTimeout(()=>{this.func()}, 100)}//this指向定义时候
+		};
+		o2.texts();//1
+		/*
+		 在谷歌浏览器下测试正确输出，有些浏览器打印错误信息
+		 * */
+	</script>
+</body>
+</html>
