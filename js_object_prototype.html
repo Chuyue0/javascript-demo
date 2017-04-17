@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript原型对象prototype了解</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var Person=function(){
+			this.canTalk=true;
+			this.greet=function(){
+				if(this.canTalk){
+					console.log("1! HI,I'm "+this.name);
+				}else{
+					console.log("1! NONE");
+				}
+			}
+		}
+		var Employee=function(name,title){
+			this.name=name;
+			this.title=title;
+			this.greet=function(){
+				if(this.canTalk){
+					console.log("2! HI,I'm "+this.name+",the "+this.title);
+				}
+			}
+		}
+		Employee.prototype=new Person();//1
+		var Customer=function(name){
+			this.name=name;
+		}
+		Customer.prototype=new Person();//2
+		var Mime=function(name){
+			this.name=name;
+			this.canTalk=false;
+		}
+		Mime.prototype=new Person();//3
+		//实例化
+		var boj=new Employee("boj","bulder");
+		var joe=new Customer("joe");
+		var mimi=new Mime("mimi");
+		boj.greet();//"2! HI,I'm boj,the bulder"
+		joe.greet();//"1! HI,I'm joe"
+		mimi.greet();//"1! NONE"
+	</script>
+</body>
+</html>
