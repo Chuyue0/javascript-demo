@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>ECMAScript 6新引入了一些新的关键字来实现class</title>
+</head>
+<body>
+	<script type="text/javascript">
+		'use strict';
+		class Polygan{ //多边形
+			constructor(height,width){
+				this.height=height;
+				this.width=width;
+			}
+		}
+		class Square extends Polygan{
+			constructor(sideLength){
+				super(sideLength, sideLength);
+			}
+			get area(){
+				return this.height*this.width;
+			}
+			set sideLength(newLenght){
+				this.height=newLenght;
+				this.width=newLenght;
+			}
+		}
+		var squares=new Square(2);
+		console.log(squares);//Square {height: 2, width: 2},area:4,__proto__:Polygan
+	</script>
+</body>
+</html>

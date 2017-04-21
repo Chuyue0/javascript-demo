@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript 继承</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//原型链
+		function SuperType(){
+			this.property=true;
+		}
+		SuperType.prototype.getSuperVal=function(){
+			return this.property;
+		}
+		function SubType(){
+			this.property=false;
+		}
+			//继承SuperType();
+		SubType.prototype=new SuperType();
+		SubType.prototype.getSubVal=function(){
+			return this.property;
+		}
+		var instance=new SubType();
+		console.log(instance.getSuperVal())//false
+		console.log(instance.getSubVal())//false
+		//借用构造函数
+		function SuperType2(){
+			this.colors=['white','red','blue'];
+		}
+		function SubType2(){
+			SuperType2.call(this); //可以使用call()方法在新创建的对象上执行构造函数，call还可以带参数
+		}
+		var instance2=new SubType2();
+		instance2.colors.push('black');
+		console.log(instance2.colors);//white,red,blue,black
+		var instance22=new SubType2();
+		console.log(instance22.colors);//white,red,blue   并不会改变原有构造函数的属性
+		//组合继承
+		function SuperType3(name){
+			this.name=name;
+			this.colors=['red','blue','white'];
+		}
+		SuperType3.prototype.sayName=function(){
+			return this.name;
+		}
+		function SubType3(name,age){
+			SuperType3.call(this,name);
+			this.age=age;
+		}
+		SubType3.prototype=new SuperType3();
+		SubType3.prototype.constructor=SubType;
+		SubType3.prototype.sayAge=function(){
+			return this.age;
+		}
+		var instance3=new SubType3('allen',20);
+		instance3.colors.push('black');
+		console.log(instance3.colors)
+		console.log(instance3.sayName());
+		console.log(instance3.sayAge());
+		//原型式继承
+		var person={
+			name:'anniey',
+			friends:['abby','chuyue','ycha']
+		}
+		var person2=Object.create(person);//可用Object.create(person)替换成Object(person)写法
+		person2.name='ss';
+		person2.friends.push('vans');
+		var person3=Object(person);
+		person3.name='aoao';
+		person.friends.push('soffia')
+		console.log(person.friends);//"abby,chuyue,ycha,vans,soffia"
+	</script>
+</body>
+</html>

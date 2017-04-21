@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>javascript prototype原型和继承了解</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//1.基于原型链的继承方法
+		var o={
+			a:1,
+			m:function(){
+				return this.a+1;
+			}
+		}
+		console.log(o.m());//2,当调用o.m时，this指向了o
+		var po=Object.create(o);//po是一个对象，继承了o
+		po.a=10;//创建po的自身属性a
+		console.log(po.m());;//输出11；当调用了po.m时，this指向了po，而po继承了o.m(),此时的this.a指向的就是自身属性po.a
+		//2. 使用不同的方法来创建对象和生成原型链
+		//2.1  普通语法创建对象
+		var o2={a:1,b:2};
+		console.log(o2.hasOwnProperty('a'));//true
+		/* 对象o2继承了Ojbect.prototype上面的所有属性，可以使用o2.hasOwnProperty('a')来判断是否有这个a属性；
+		 * hasOwnProperty 是Ojbect.prototype的自身属性,返回布尔值；
+		 * Object.prototype 的原型是null
+		 * 它的原型链如下：
+		 * o2 --> Ojbect.prototype --> null
+		 */
+		var arr=['abby','van','anniey'];
+		/* 数组array都继承的是Array.prototype
+		 * 数组中的方法find,forEach,indexOf,map,pop,push,reduce,shift,slice,sort,toString,splice 等方法都是都是从它继承而来。
+		 * 它的原型链是：
+		 * arr --> Array.prototype --> Object.prototype --> null
+		 */
+		function ff(){
+			return true;
+		}
+		/* 函数都继承于Function.prototype
+		 * call , bind 等方法都是从它继承而来
+		 * 它的原型链是：
+		 * ff --> Function.prototype --> Object.prototype --> null
+		 */
+		//2.2  使用构造器创建对象
+		function People(name){
+			this.name=name;
+			this.Introduce=function(){ //对象方法
+				console.log('My name is '+this.name);
+			}
+		}
+		People.eat=function(){ //类方法
+			console.log("people eat rice everyday!");
+		}
+		People.prototype.chineses=function(){ //原型方法
+			console.log('我的名字是'+this.name);
+		}
+		var p1=new People('niki');
+		p1.Introduce(); //"My name is niki"
+		People.eat(); //"people eat rice everyday!"
+		p1.chineses(); //"我的名字是niki"
+		/* 构造器是一个普通的函数，当使用new操作符来作用这个函数时，就是构造函数。
+		 */
+		function Graph(){
+			this.vertices=[];
+			this.edges=[];
+		}
+		Graph.prototype={
+			addvertext:function(v){
+				this.vertices.push(v);
+			}
+		}
+		var g=new Graph(); //
+		g.addvertext('circle'); //
+		console.log(g.vertices);//circle
+		/* g是生成的对象，自身属性带有'vertices'和'edges';
+		 * g实例化时,指向的是Graph.prototype
+		 */
+		//2.3 ES5的Object.create()创建对象
+		var o3={a:1};
+		/* 以上的原型链是： o3 --> Object.prototype --> null
+		 */
+		var o33=Object.create(o3);
+		console.log(o33.a); //1
+		/* 以上的原型链是： o33 --> o3 --> Object.prototype --> null
+		 */
+		var o333=Object.create(o33);
+		console.log(o333.a); //1
+		/* 以上的原型链是：  o333 --> o33 --> o3 --> Object.prototype --> null
+		 */
+		var o31=Object.create(null);
+		console.log(o31.hasOwnProperty); //undefined
+		/* ECMAScript 5 新增方法Object.create() 来创建一个新对象
+		 * o31没有继承Object.prototype
+		 */
+	</script>
+</body>
+</html>
