@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit" />
+	<meta http-equiv="X-UA-Compatible" content="IE=webkit">
+	<title>导出table表格到excel</title>
+	<style type="text/css">
+		.table{background-color: transparent;border-collapse: collapse;border-spacing: 0;border: 1px solid #ddd;}
+		.tableStyles{font-size: 12px;margin-bottom: 10px;}
+		.tableStyles>thead{background-color: #f4f4f4;}
+		.tableStyles>thead>tr>td,.table-bordered>thead>tr>th{border-bottom-width: 1px;}
+		.tableStyles>thead>tr>th,.tableStyles>tbody>tr>td{padding: 5px;line-height: normal;text-align: center;vertical-align: middle;color: #999;box-sizing: border-box;border: 1px solid #e6e6e6;}
+		.tableStyles>tbody>tr{height: 68px;}
+		.tableStyles>tbody>tr>td{color: #333;}
+		.tableStyles>tbody>tr:hover{background-color: rgba(227,233,239,.5); }
+		.tableStyles>tbody>tr>td:hover{background: #6AACF1;color: #fff!important; font-size: 12px; box-sizing: border-box; border: none;padding: 0;cursor: pointer;}
+		.tableStyles>tbody>tr>td:hover .color11,.tableStyles>tbody>tr>td:hover .color21{color: #fff;}
+	</style>
+</head>
+<body>
+	<table class="table tableStyles" id="tables">
+		<caption>不正经的统计表</caption><!--可以生成表格的标题-->
+		<thead>
+			<tr>
+				<th>品牌</th>
+				<th>门店</th>
+				<th>本周回访</th>
+				<th>本月回访</th>
+				<th>总回访</th>
+				<th>本周成交数</th>
+				<th>本月成交数</th>
+				<th>总成交数</th>
+				<th>异常量</th>
+				<th>成交转化率</th>
+				<th>经手人/th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td rowspan="3">华为</td>
+				<td>华为深圳店</td>
+				<td>20</td>
+				<td>80</td>
+				<td>500</td>
+				<td>1</td>
+				<td>3</td>
+				<td>20</td>
+				<td>1</td>
+				<td>4.0%</td>
+				<td>黄生</td>
+			</tr>
+			<tr>
+				<td>华为东莞店</td>
+				<td>20</td>
+				<td>80</td>
+				<td>500</td>
+				<td>1</td>
+				<td>3</td>
+				<td>20</td>
+				<td>1</td>
+				<td>4.0%</td>
+				<td>黄生</td>
+			</tr>
+			<tr>
+				<td>华为佛山店</td>
+				<td>20</td>
+				<td>80</td>
+				<td>500</td>
+				<td>1</td>
+				<td>3</td>
+				<td>20</td>
+				<td>1</td>
+				<td>4.0%</td>
+				<td>黄生</td>
+			</tr>
+			<tr>
+				<td rowspan="3">小米</td>
+				<td>米家深圳店</td>
+				<td>20</td>
+				<td>80</td>
+				<td>500</td>
+				<td>1</td>
+				<td>3</td>
+				<td>20</td>
+				<td>1</td>
+				<td>4.0%</td>
+				<td>林生</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<h3>使用js导出表格到excel</h3>
+	<p>1.只在谷歌/火狐下起作用，保留单元格合并的效果,下载之后的命名是:下载.xls</p>
+	<a id="dlink"  style="display:none;"></a>
+	<input type="button" onclick="tableToExcel('tables', 'name', 'myfile.xls')" value="Export to Excel">
+	<script type="text/javascript">
+		var tableToExcel = (function () {
+	        var uri = 'data:application/vnd.ms-excel;base64,',
+	        	template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+	        	base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) },
+	        	format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) };
+	        return function (table, name, filename) {
+	            if (!table.nodeType) table = document.getElementById(table)
+	            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+	
+	            document.getElementById("dlink").href = uri + base64(format(template, ctx));
+	            document.getElementById("dlink").download = filename;
+	            document.getElementById("dlink").click();
+	        }
+	    })()
+	</script>
+	
+	<hr />
+	<p>2.谷歌/qq浏览器（极速行，兼容不行）都可以，没有合并单元格的效果;</p>
+	<p>IE需要装OFFICE excel???</p>
+	<p>火狐下载的文件不能进行命名</p>
+	<input id="Button1" type="button" value="导出EXCEL" onclick="javascript:excels('tables')" />
+	<script type="text/javascript">
+		var timer;
+		function getExplorer(){//获取浏览器
+			var explorer=window.navigator.userAgent;
+			if(explorer.indexOf("MSIE") >= 0|| (explorer.indexOf("Windows NT 6.1;") >= 0 && explorer.indexOf("Trident/7.0;") >= 0)){
+				return 'ie';
+			}else if (explorer.indexOf("Firefox") >= 0) {
+				return 'Firefox';
+			}else if(explorer.indexOf("Chrome") >= 0){
+                return 'Chrome';
+            }else if(explorer.indexOf("Opera") >= 0){
+                return 'Opera';
+            }else if(explorer.indexOf("Safari") >= 0){
+                return 'Safari';
+            }
+		}
+		function excels(table){
+			if(getExplorer()=='ie'){
+				var curTbl = document.getElementById(table);
+				var oXl=new ActiveXObject("Excel.Application");//创建AX对象excel 
+				var oWB = oXL.Workbooks.Add();//获取workbook对象
+				var xlsheet = oWB.Worksheets(1);//激活当前sheet
+				var sel = document.body.createTextRange();
+				sel.moveToElementText(curTbl);//把表格中的内容移到TextRange中 
+				sel.select;//全选TextRange中内容
+				sel.execCommand("Copy");//复制TextRange中内容
+				xlsheet.Paste();//粘贴到活动的EXCEL中
+				oXL.Visible = true;//设置excel可见属性
+				try{
+					var filename = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+				}catch(e){
+					window.print("Nested catch caught " + e);
+				}finally{
+					oWB.SaveAs(filename);
+					oWB.Close(savechanges = false);
+					oXL.Quit();
+					oXL = null;//结束excel进程，退出完成
+					timer = window.setInterval("Cleanup();", 1);
+				}
+			}else{
+				tableToExcel("tables");
+			}
+		}
+		function Cleanup(){
+			window.clearInterval(timer);
+			CollectGarbage();//CollectGarbage,是IE的一个特有属性,用于释放内存的
+		}
+		var tableToExcel=(function(){
+			var uri = 'data:application/vnd.ms-excel;base64,',
+				template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+				base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) },
+				format = function(s, c) {
+                    return s.replace(/{(\w+)}/g,
+                    function(m, p) { return c[p]; }) };
+			return function(table, name) {
+				if (!table.nodeType) table = document.getElementById(table);
+				var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML};
+				window.location.href = uri + base64(format(template, ctx))
+			}
+		})();
+	</script>
+</body>
+</html>
