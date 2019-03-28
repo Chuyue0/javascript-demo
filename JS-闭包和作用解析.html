@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Javascript 作用域和闭包</title>
+</head>
+<body>
+<div id="content">
+
+</div>
+
+<div>
+    扩展：
+    1. 作用域
+        用于如何查找变量或标识符的规则；
+        try{}catch(){} 会在分句catch中创建一个块作用域；
+        es6中 let关键字
+    2. 闭包
+        闭包中含有return 语句；
+        闭包内能访问外部的变量，外部不能访问闭包内的；
+    
+        在闭包的一个环境中，能够持久写入内存
+    3. 变量提升
+        函数申明和变量申明都会提升；
+        函数先提升，再次是变量；
+</div>
+<script>
+    (function () {
+        //块级作用域 let
+        var arr = [];
+        for (var i = 0; i <= 5; i++) {
+            //for(let i=0;i<=5;i++){
+            arr[i] = function () {
+                console.log(i);
+            }
+        }
+        arr[0]();
+        arr[1]();
+        arr[2]();
+        arr[3]();
+        arr[4]();
+        // var定义的则是输出6 6 6 6 6 ,let 定义输出0 1 2 3 4
+
+        var name = 'rosea';
+
+        function func() {
+            console.log(name); // rosea
+            name = 'ty';
+            var name; //此时变量会提升 ，第一个name输出为 undefined ，第二个是ty
+            console.log(name); //ty
+        }
+
+        func();
+
+
+        //闭包  ~~ 柯里化
+        var curryScore = function (fn) {
+            let arr = [];
+            return function () {
+                if (arguments.length == 0) {
+                    fn.apply(null,arr);
+                } else {
+                    arr = arr.concat([].slice.call(arguments))
+                }
+                console.log(arr);
+            }
+        };
+        var totalNum=0;
+        var curry = curryScore(function () {
+            //运算
+            for(var i in arguments){
+                totalNum += arguments[i];
+            }
+        });
+        curry(2); // [2]
+        curry(3); // [2,3]
+        curry(); // [2,3]   // 参数为空时执行运算函数，返回结果； 参数为2，3
+        curry(21); // [2,21]
+        console.log(totalNum) // 5
+    })();
+</script>
+</body>
+</html>

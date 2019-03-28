@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>经典面试算法刨析 -- 排序</title>
+</head>
+<body>
+<div id="content">
+    例子： 2W多名员工根据年龄排序
+    分析： 需要考虑时间复杂度、稳定性、数据重复量多少；
+          员工 -> 工号
+          2W -> 数据量
+          年龄 -> 18~65区间，有重复数据；
+    选择归并排序
+    归并排序:
+        原理：拆分、归并
+            拆分：反复一拆为二，直到独立为一
+            归并：向上回溯，有序排列
+    <div>
+        
+    </div>
+    <img src="image/algorithm.png" width="1000" alt="">
+</div>
+
+<div>
+    扩展：
+    1. 排序算法；
+        冒泡、选择、快速
+    2. 回文；
+    3. 去掉数组中重复的值；
+    4. 统计字符串中最多的字母；
+    5. 两个变量的数据交换；
+        异或运算符^ : 两个二进制上下比较只有位不相等时才取1，否则取零；
+        变量的解构赋值 : 从数组和对象中提取值，对变量进行赋值，这被称为解构；
+    6. Array.shift()
+        shift() 方法用于把数组的第一个元素从其中删除，并返回第一个元素的值。
+    7. Math.floor(x)
+        floor() 方法可对一个数进行下舍入
+        ~~(3 / 2)  ~~运算符可以做到同样的向下舍入
+</div>
+<script type="text/javascript">
+    (function () {
+        //5. 两个变量的数据交换；
+        let a = 10, b = 20; //算数运算 ，会存在溢出问题
+        b = b - a;
+        a = a + b;
+        b = a - b;
+        console.log(a, b); // 20,10
+
+        let c = 30, d = 40; //异或运算符，二进制计算
+        c = c ^ d;
+        d = d ^ c;
+        c = c ^ d;
+        console.log(c, d); // 40,30
+
+        let e = 50, f = 60; //ES6 解构赋值
+        [e, f] = [f, e];
+        console.log(e, f); //60,50
+
+        //例子：
+        let arr = [2,5,4,6,9,111,0,8,1];
+
+        function mergeFn(left, right) {
+            //合并
+            let tem = [];
+            while (left.length > 0 && right.length > 0) {
+                if (left[0] < right[0]) {
+                    tem.push(left.shift());
+                } else {
+                    tem.push(right.shift());
+                }
+            }
+            return tem.concat(left, right)
+        }
+
+        function slitFn(data) {
+            //拆分
+            let dataLen = data.length;
+            if (dataLen === 1) {
+                return data;
+            }
+            let midNum = Math.floor(dataLen / 2); //获取中间下标
+            let leftData = data.slice(0, midNum);
+            let rightData = data.slice(midNum);
+            return mergeFn(slitFn(leftData), slitFn(rightData));
+        }
+
+        console.log(slitFn(arr));
+    })()
+</script>
+</body>
+</html>

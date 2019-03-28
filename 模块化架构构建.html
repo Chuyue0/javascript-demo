@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>驱动模块化架构练习</title>
+</head>
+<body>
+<!--
+    逆向思维逐步推进框架的实现，
+    以简单的api来逐步实现功能；
+-->
+<!--
+    框架是全局思维，不受业务限制
+-->
+<script type="text/javascript" id="ModuleDriver">
+    //框架js部分
+    let ModuleDriver = (function (global, factory) {
+        return factory.call(global);
+    })(typeof window !== 'undefined' ? window : this, function () {
+        //代码所在处
+        //闭包所在，保护数据不受污染
+
+        //模块源数据
+        let _Modules_ = {};
+        let _CORE_ = {
+            module: function (view ,render) {
+                return {
+                    model: null,
+                    render: render,
+                    view: view
+                }
+            },
+            init: function (data,modules) {
+                //初始化函数
+                _Modules_ = {};
+                for (let module in modules) {
+                    _Modules_[module] = modules[module];
+                }
+                this.load(data);
+            },
+            load: function (data) {
+                //装载函数
+                this.fetch(data);
+                this.render();//渲染view
+            },
+            fetch: function (data) {
+                //填充函数
+                for (let key in data) {
+                    console.log(key);
+                }
+            },
+            render: function () {
+                //渲染数据函数
+            }
+        };
+        return _CORE_;
+    })
+</script>
+<script type="text/javascript">
+    //调用部分
+    let data = {},
+        URL = "json/data.json";
+
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.open('POST', URL, true);
+    httpRequest.setRequestHeader('Content-Type', 'application/json');
+    httpRequest.send('sign=1');
+    httpRequest.onreadystatechange = function (ev) {
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            //请求成功
+            let data = JSON.parse(httpRequest.responseText);
+
+            data && ModuleDriver.init(data.data, function () {
+
+            });
+        }
+    };
+
+
+</script>
+</body>
+</html>
